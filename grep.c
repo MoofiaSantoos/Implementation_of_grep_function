@@ -16,44 +16,45 @@ int arguments(int argc, char **argv, char *buf, flag *flags) {
 
   while ((opt = getopt_long(argc, argv, "e:ivclnhsf:o", NULL, NULL)) != -1) {
     switch (opt) {
-      case 'e':
-        flags->e++;
-        grep_e(buf, *flags);
-        break;
-      case 'i':
-        flags->i = 1;
-        break;
-      case 'v':
-        flags->v = 1;
-        break;
-      case 'c':
-        flags->c = 1;
-        break;
-      case 'l':
-        flags->l = 1;
-        break;
-      case 'n':
-        flags->n = 1;
-        break;
-      case 'h':
-        flags->h = 1;
-        break;
-      case 's':
-        flags->s = 1;
-        break;
-      case 'f':
-        flags->f++;
-        grep_f(buf, argv, &fail, *flags);
-        break;
-      case 'o':
-        flags->o = 1;
-        break;
-      default:
-        fail = 1;
-        break;
+    case 'e':
+      flags->e++;
+      grep_e(buf, *flags);
+      break;
+    case 'i':
+      flags->i = 1;
+      break;
+    case 'v':
+      flags->v = 1;
+      break;
+    case 'c':
+      flags->c = 1;
+      break;
+    case 'l':
+      flags->l = 1;
+      break;
+    case 'n':
+      flags->n = 1;
+      break;
+    case 'h':
+      flags->h = 1;
+      break;
+    case 's':
+      flags->s = 1;
+      break;
+    case 'f':
+      flags->f++;
+      grep_f(buf, argv, &fail, *flags);
+      break;
+    case 'o':
+      flags->o = 1;
+      break;
+    default:
+      fail = 1;
+      break;
     }
   }
-  if (!flags->e && !flags->f) strcat(buf, argv[optind++]);
+  if (!flags->e && !flags->f)
+    strcat(buf, argv[optind++]);
   return fail;
 }
 
@@ -73,7 +74,8 @@ void open_file(int argc, char *argv[], char *buf, flag flags) {
 }
 
 void grep_e(char *buf, flag flags) {
-  if (flags.e > 1) strcat(buf, "|");
+  if (flags.e > 1)
+    strcat(buf, "|");
   strcat(buf, optarg);
 }
 
@@ -110,7 +112,8 @@ void workspase(FILE *fp, char *buf, char *argv[], int *count_file, flag flags) {
   regex_t regex;
   char str[STR_COUNT] = {0};
   int reg_i = 0;
-  if (flags.f) buf[strlen(buf) - 1] = '\0';
+  if (flags.f)
+    buf[strlen(buf) - 1] = '\0';
   while (fgets(str, STR_COUNT, fp) != NULL) {
     if (flags.i) {
       reg_i = REG_ICASE;
@@ -121,14 +124,16 @@ void workspase(FILE *fp, char *buf, char *argv[], int *count_file, flag flags) {
     line_n++;
   }
   if (flags.c) {
-    if (*count_file > 1) printf("%s:", argv[optind]);
+    if (*count_file > 1)
+      printf("%s:", argv[optind]);
     if (flags.l && line_c > 0)
       printf("1\n");
     else
       printf("%d\n", line_c);
   }
 
-  if (flags.l && counter > 0) printf("%s\n", argv[optind]);
+  if (flags.l && counter > 0)
+    printf("%s\n", argv[optind]);
   fclose(fp);
 }
 

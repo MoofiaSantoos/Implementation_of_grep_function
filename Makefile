@@ -1,13 +1,11 @@
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -std=c11
 
-all: grep
-
-grep: clean
-	$(CC) $(CFLAGS) grep.c -o grep
+all:
+	$(CC) $(CFLAGS) grep.c -o mygrep
 
 clean: 
-	rm -rf grep
+	rm -rf mygrep
 
 rebuild: all
 
